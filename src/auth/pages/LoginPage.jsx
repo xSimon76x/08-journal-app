@@ -5,20 +5,22 @@ import React, { useMemo } from 'react'
 import { Google } from '@mui/icons-material'
 import { AuthLayout } from '../layout/AuthLayout'
 import { useForm } from '../../hooks'
-import { checkingAuthentication, startGoogleSignIn, startLoginWithEmailPassword } from '../../store'
+import { checkingAuthentication, startGoogleSignIn, startLoginWithEmailPassword } from '../../store';
+
+const formData = {
+  email: '',
+  password: ''
+}
 
 export const LoginPage = () => {
 
   const { status, errorMessage } = useSelector( state => state.auth );
 
   const dispatch = useDispatch();
+  // solucion error cap 305 
+  const { email, password, onInputChange, formState } = useForm( formData );
 
-  const { email, password, onInputChange, formState } = useForm({
-    email: 'simon2412@gmail.com',
-    password: '123456'
-  });
-
-  const isAuthenticating = useMemo( () => status === 'checking', [status] )
+  const isAuthenticating = useMemo( () => status === 'checking', [status] );
 
   const onSubmit = (e) => {
     e.preventDefault();

@@ -16,8 +16,6 @@ export const JournalPage = () => {
      dispatch( startNewNote() );
   };
 
-  console.log(active)
-
   return (
     <JournalLayout>
       
