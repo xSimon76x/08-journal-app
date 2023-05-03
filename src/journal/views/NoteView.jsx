@@ -1,10 +1,10 @@
-import { SaveOutlined } from "@mui/icons-material"
-import { Button, Grid, TextField, Typography } from "@mui/material"
+import { SaveOutlined, UploadOutlined } from "@mui/icons-material"
+import { Button, Grid, IconButton, TextField, Typography } from "@mui/material"
 import { ImageGallery } from "../components"
 import { useDispatch, useSelector } from "react-redux"
 import { useForm } from "../../hooks/useForm"
-import { useEffect, useMemo } from "react"
-import { setActiveNote, startSaveNote, updateNote } from "../../store"
+import { useEffect, useMemo, useRef } from "react"
+import { setActiveNote, startSaveNote, startUpLoadingFiles, updateNote } from "../../store"
 import Swal from "sweetalert2";
 import 'sweetalert2/dist/sweetalert2.css';
 
@@ -12,6 +12,8 @@ import 'sweetalert2/dist/sweetalert2.css';
 export const NoteView = () => {
 
     const dispatch = useDispatch();
+
+    const fileInputRef = useRef();
 
     const { active: note, messageSaved, isSaving } = useSelector( state => state.journal );
 
@@ -38,6 +40,12 @@ export const NoteView = () => {
     const onSaveNote = () => {
         dispatch( startSaveNote() );
     }
+
+    const onFileInputChange = ({ target }) => {
+        if ( target.files === 0 ) return;
+
+        dispatch( startUpLoadingFiles( target.files ) );
+    };
     
 
     return (
@@ -52,6 +60,23 @@ export const NoteView = () => {
                 <Typography fontSize={39} fontWeight={'light'}> { dateString }</Typography>
             </Grid>
             <Grid item>
+
+                <input 
+                    type="file"
+                    multiple
+                    onChange={ onFileInputChange }
+                    style={{ display: 'none' }}
+                    ref={ fileInputRef }
+                />
+
+                <IconButton
+                    color="primary"
+                    disabled={ isSaving }
+                    onClick={ () => fileInputRef.current.click() }
+                >
+                    <UploadOutlined />
+                </IconButton>
+
                 <Button 
                     color="primary" 
                     sx={{ padding: 2 }} 
