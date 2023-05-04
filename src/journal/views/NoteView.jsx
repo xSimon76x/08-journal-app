@@ -1,10 +1,16 @@
-import { SaveOutlined, UploadOutlined } from "@mui/icons-material"
+import { DeleteOutlined, SaveOutlined, UploadOutlined } from "@mui/icons-material"
 import { Button, Grid, IconButton, TextField, Typography } from "@mui/material"
 import { ImageGallery } from "../components"
 import { useDispatch, useSelector } from "react-redux"
 import { useForm } from "../../hooks/useForm"
 import { useEffect, useMemo, useRef } from "react"
-import { setActiveNote, startSaveNote, startUpLoadingFiles, updateNote } from "../../store"
+import { deleteNoteById, 
+    setActiveNote, 
+    startDeletingNote, 
+    startSaveNote, 
+    startUpLoadingFiles, 
+    updateNote 
+} from "../../store"
 import Swal from "sweetalert2";
 import 'sweetalert2/dist/sweetalert2.css';
 
@@ -35,6 +41,7 @@ export const NoteView = () => {
         if ( messageSaved.length > 0) {
             Swal.fire('Nota actualizada', messageSaved, 'success');
         }
+
     }, [messageSaved]);
 
     const onSaveNote = () => {
@@ -45,6 +52,10 @@ export const NoteView = () => {
         if ( target.files === 0 ) return;
 
         dispatch( startUpLoadingFiles( target.files ) );
+    };
+
+    const onDelete = () => {
+        dispatch( startDeletingNote() );
     };
     
 
@@ -114,7 +125,22 @@ export const NoteView = () => {
                 />
             </Grid>
 
-            <ImageGallery />
+            <Grid
+                container
+                justifyContent={'end'}
+            >
+                <Button
+                    onClick={ onDelete }
+                    sx={{ mt: 2 }}
+                    color="error"
+                >
+                    <DeleteOutlined />
+                    Eliminar
+                </Button>
+
+            </Grid>
+
+            <ImageGallery images={ note.imageUrls } />
 
         </Grid>
     )

@@ -1,10 +1,13 @@
+import { deleteDoc, doc } from "firebase/firestore/lite";
 import { 
     singInWithGoogle, 
     registerUserWithEmailPassword, 
     loginWithEmailPassword, 
     logoutFirebase 
 } from "../../firebase/providers";
+import { clearNotesLogout, deleteNoteById } from "../Journal";
 import { checkingCredentials, login, logout } from "./";
+import { FireBaseDB } from "../../firebase/config";
 
 export const checkingAuthentication = ( email, password ) => {
     return async( dispatch ) => {
@@ -60,6 +63,20 @@ export const startLogout = () => {
 
         await logoutFirebase();
 
+        dispatch( clearNotesLogout() );
         dispatch( logout() );
+    }
+};
+
+export const startDeletingNote = () => {
+    return async (dispatch, getState) => {
+        const { uid } = getState().auth;
+        const { active: note } = getState().journal;
+
+        const docRef = doc( FireBaseDB, `${ uid }/journal/notes/${ note.id }` );
+        await deleteDoc( docRef );
+
+
+        dispatch( deleteNoteById( note.id ) );
     }
 };
