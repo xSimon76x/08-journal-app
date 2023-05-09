@@ -6,13 +6,25 @@ import { getFirestore } from 'firebase/firestore/lite';
 // https://firebase.google.com/docs/web/setup#available-libraries
 
 // Your web app's Firebase configuration
+// Dev/Production
+// const firebaseConfig = {
+//   apiKey: "AIzaSyB2foN0V4Zrr0rIkDRRYdLAK4EeQtfilEY",
+//   authDomain: "react-curso-udemy-a3285.firebaseapp.com",
+//   projectId: "react-curso-udemy-a3285",
+//   storageBucket: "react-curso-udemy-a3285.appspot.com",
+//   messagingSenderId: "456055095193",
+//   appId: "1:456055095193:web:1a78978d2959c128e99d08"
+// };
+
+// Your web app's Firebase configuration
+// Test
 const firebaseConfig = {
   apiKey: "AIzaSyB2foN0V4Zrr0rIkDRRYdLAK4EeQtfilEY",
   authDomain: "react-curso-udemy-a3285.firebaseapp.com",
   projectId: "react-curso-udemy-a3285",
   storageBucket: "react-curso-udemy-a3285.appspot.com",
   messagingSenderId: "456055095193",
-  appId: "1:456055095193:web:1a78978d2959c128e99d08"
+  appId: "1:456055095193:web:9a239e9fe018776be99d08"
 };
 
 // Initialize Firebase
