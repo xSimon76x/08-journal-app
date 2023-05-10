@@ -1,7 +1,8 @@
 import { collection, deleteDoc, getDocs } from 'firebase/firestore/lite';
-import { FirebaseDB } from '../../../src/firebase/config';
-// import { savingNewNote, addNewEmptyNote, setActiveNote } from '../../../src/store/journal/journalSlice';
+import { FireBaseDB } from '../../../src/firebase/config';
+import { savingNewNote, addNewEmptyNote, setActiveNote } from '../../../src/store/journal/journalSlice';
 import { startNewNote } from '../../../src/store/Journal/thunks';
+// import { savingNewNote } from '../../../src/store/Journal/journalSlice';
 
 
 describe('Pruebas en Journal Thunks', () => {
@@ -11,8 +12,6 @@ describe('Pruebas en Journal Thunks', () => {
 
     beforeEach( () => jest.clearAllMocks() );
 
-
-
     test('startNewNote debe de crear una nueva nota en blanco', async() => {
 
         const uid = 'TEST-UID';
@@ -20,32 +19,34 @@ describe('Pruebas en Journal Thunks', () => {
 
         await startNewNote()( dispatch, getState );
 
-        // expect( dispatch ).toHaveBeenCalledWith( savingNewNote() );
+        expect( dispatch ).toHaveBeenCalledWith( savingNewNote() );
 
-        // expect( dispatch ).toHaveBeenCalledWith( addNewEmptyNote({
-        //     body: '',
-        //     title:'',
-        //     id: expect.any( String ),
-        //     date: expect.any( Number ),
-        // }));
+        expect( dispatch ).toHaveBeenCalledWith( addNewEmptyNote({
+            body: '',
+            title:'',
+            id: expect.any( String ),
+            date: expect.any( Number ),
+            imageUrls: []
+        }));
         
-        // expect( dispatch ).toHaveBeenCalledWith( setActiveNote({
-        //     body: '',
-        //     title:'',
-        //     id: expect.any( String ),
-        //     date: expect.any( Number ),
-        // }));
+        expect( dispatch ).toHaveBeenCalledWith( setActiveNote({
+            body: '',
+            title:'',
+            id: expect.any( String ),
+            date: expect.any( Number ),
+            imageUrls: []
+        }));
 
-        // const collectionRef = collection( FirebaseDB, `${ uid }/journal/notes`);
-        // const docs = await getDocs( collectionRef );
+        const collectionRef = collection( FireBaseDB, `${ uid }/journal/notes`);
+        const docs = await getDocs( collectionRef );
 
-        // const deletePromises = [];
-        // docs.forEach( doc => deletePromises.push( deleteDoc( doc.ref ) ) );
-        // await Promise.all( deletePromises );
+        const deletePromises = [];
+        docs.forEach( doc => deletePromises.push( deleteDoc( doc.ref ) ) );
+        await Promise.all( deletePromises );
         
 
 
-    });
+    }, 10000);
 
     
 });

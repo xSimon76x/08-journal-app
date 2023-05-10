@@ -33,7 +33,7 @@ describe('Preubas en el fileUpload', () => {
         const url = await fileUpload( file );
 
         expect( url ).toBeNull();
-    })
+    }, 10000)
      
     
 });
