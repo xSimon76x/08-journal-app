@@ -4,7 +4,7 @@ import 'setimmediate';
 import { getEnvironments } from './src/helpers/getEnvironments'
 
 require('dotenv').config({
-    path: '.env' //nombre del archivo de variables de entorno
+    path: '.env.test' //nombre del archivo de variables de entorno
 });
 
 jest.mock('./src/helpers/getEnvironments', 

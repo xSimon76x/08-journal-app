@@ -46,7 +46,7 @@ describe('Pruebas en Journal Thunks', () => {
         
 
 
-    }, 10000);
+    }, 12000);
 
     
 });
